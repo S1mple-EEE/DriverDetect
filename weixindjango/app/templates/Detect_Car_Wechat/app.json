@@ -1,0 +1,49 @@
+{
+  "pages": [
+    
+    "pages/main/main",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/perInfo/perInfo",
+    "pages/lipei/lipei",
+    "pages/sc/sc",
+    "pages/result/result"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "AI识别车辆损伤",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/lipei/lipei",
+        "text": "定损记录",
+        "iconPath": "pages/picture/record.png",
+        "selectedIconPath": "pages/picture/record_clicked.png"
+      },
+      {
+        "pagePath": "pages/main/main",
+        "text": "上传",
+        "iconPath": "pages/picture/center.png",
+        "selectedIconPath": "pages/picture/center_clicked.png"
+      },
+      {
+        "pagePath": "pages/perInfo/perInfo",
+        "text": "我的",
+        "iconPath": "pages/picture/me-n.png",
+        "selectedIconPath": "pages/picture/me_clicked.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000000,
+    "downloadFile": 10000000,
+    "connectSocket":10000000,
+    "uploadFile":10000000
+  }
+}

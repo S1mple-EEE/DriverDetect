@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<!-- 首次跳转页
+第一次登陆时授权页面
+ -->
+
+ <!-- 设置背景 -->
+<image class='background' src="../picture/bg.png" mode="aspectFill"></image>
+
+<!-- 主体
+本内容基本不动
+ --->
+<view class="container">
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+    <view class="usermotto" bindtap='tapToMain'>
+      <button class="user-motto" hover-class="user-motto-get">{{motto}}</button>
+    </view>
+</view>

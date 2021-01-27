@@ -1,0 +1,44 @@
+  <!--pages/lipei/lipei.wxml-->
+  <!--理赔记录页面 
+  tabBar最左侧一栏
+   -->
+
+  <!-- 背景图片 -->
+<image class='background' src="../picture/bg.png" mode="aspectFill"></image>
+
+
+<view class="container">
+<image src="https://lamaric.goho.co/media/icon/icon_record.png " class="title" mode="aspectFit"></image>
+  <!--菜单栏的view块 
+  改成可点击的页面的话，要么用tabBar来写或者利用中间变量来if判定
+   -->
+  <view class="menu">
+    <!-- 全部 -->
+    <view class="menupart">
+    <button class="btn" hover-class="btn_hover_all" plain='true'  bindtap="btn_all" style="background-image: url({{all_url}});"></button>
+    </view>
+    <!-- 待理赔 -->
+    <view class="menupart">
+     <button class="btn" hover-class="btn_hover_wait" plain='true'  bindtap="btn_wait" style="background-image: url({{wait_url}});"></button>
+    </view>
+    <!-- 未报保 -->
+    <view class="menupart">
+    <button class="btn" hover-class="btn_hover_notinsure" plain='true'  bindtap="btn_notinsure" style="background-image: url({{notbaobao_url}});"></button>
+    </view>
+    <!-- 已完成 -->
+    <view class="menupart">
+      <button class="btn" hover-class="btn_hover_finish" plain='true'  bindtap="btn_finish" style="background-image: url({{finish_url}});"></button>
+    </view>
+  </view>
+  <!-- 显示记录 -->
+  <view class="dsjl" style="display:{{status[0]}}" >
+    <image src="https://lamaric.goho.co/media/icon/icon_view01.png" mode="aspectFit"></image>
+  </view>
+  <view class="dsjl" style="display:{{status[1]}}" >
+    <image src="https://lamaric.goho.co/media/icon/icon_view03.png" mode="aspectFit"></image>
+  </view>
+  <view class="dsjl" style="display:{{status[2]}}" >
+    <image src="https://lamaric.goho.co/media/icon/icon_view02.png" mode="aspectFit"></image>
+  </view>
+
+</view>

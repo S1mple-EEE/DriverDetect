@@ -1,0 +1,99 @@
+<!--pages/sc/sc.wxml-->
+<!-- 照片上传界面,四角照及损伤检测图片 -->
+<!-- 背景图片 -->
+<image class='background' src="../picture/bg.png" mode="aspectFill"></image>
+<!-- 返回按钮 -->
+<image src="../picture/return.png " class="ret" bindtap="taptomain"></image>
+
+<view class="maincontainer">
+  <!-- 四角照的view块 -->
+  <view >
+    <view >
+      <image class="bar" src="../picture/news1.png" mode='aspectFill'></image>
+    </view>
+    <view class="dak">
+      <!-- 第一张四角照,布尔判定显示图片 -->
+      <view class="showImage">
+        <video wx:if="{{isLoading1}}" src="{{img_url1}}" class="imgl" ></video>
+        <block wx:else>
+          <view class="loadview">
+            <button class="loadbuttonl" style="background-image:url({{picture1}});" plain='true' loading="{{isLoading1}}" bindtap="upload1"></button>     
+          </view>
+        </block>
+      </view>
+      
+            <!-- plain属性为按钮是否镂空，背景色透明。
+
+            true：按钮镂空（显示明显外框）。
+
+            false：不镂空。 
+            loading属性为点击等待。
+
+            true：进行点击等待（有一个表示等待的圈）。
+
+            false：无等待。
+            -->
+
+      <!-- 第二张四角照,布尔判定显示图片 -->
+      <view class="showImage">
+        <image wx:if="{{isLoading2}}" src="{{img_url2}}" class="imgr"></image>
+        <block wx:else>
+          <!--<image src="{{picture}}"></image>-->
+          <view class="loadview">
+            <button class="loadbuttonr" style="background-image:url({{picture2}});" plain='true' loading="{{isLoading2}}" bindtap="upload2"></button>
+          </view>
+        </block>
+      </view>
+
+      <button class='detectbtnl' bindtap="eyedetect"> 闭眼检测 </button>
+      <button class='detectbtnr' bindtap="eyedetect"> 头部姿态检测 </button>
+    </view>
+
+
+
+
+    
+  <!-- 第三张四角照,布尔判定显示图片 -->
+  <view class="dak">
+    <view class="showImage">
+      <image wx:if="{{isLoading3}}" src="{{img_url3}}" class="imgl"></image>
+      <block wx:else>
+        <!--<image src="{{picture}}"></image>-->
+        <view class="loadview">
+          <button class="loadbuttonl" style="background-image:url({{picture3}});" plain='true' loading="{{isLoading3}}" bindtap="upload3"></button>
+        </view>
+      </block>
+    </view>
+    <!-- 第四张四角照,布尔判定显示图片 -->
+    <view class="showImage">
+      <image wx:if="{{isLoading4}}" src="{{img_url4}}" class="imgr"></image>
+      <block wx:else>
+        <!--<image src="{{picture}}"></image>-->
+        <view class="loadview">
+          <button class="loadbuttonr" style="background-image:url({{picture4}});" plain='true' loading="{{isLoading4}}" bindtap="upload4"></button>
+        </view>
+      </block>
+    </view> 
+
+    <button class='detectbtnl' bindtap="eyedetect"> 不规范行为检测 </button>
+    <button class='detectbtnr' bindtap="eyedetect"> 视线检测 </button>
+  </view>
+</view>
+  <view style="margin-top: 40rpx">
+      <image class="bar" src="../picture/news1.png" mode='aspectFill'></image>
+  </view>
+  <!-- 损伤照,上传图片 -->
+  <view class="showImage">
+    <image wx:if="{{isLoading}}" src="{{img_url}}" class="img"></image>
+    <block wx:else>
+      <!--<image src="{{picture}}"></image>-->
+      <view class="loadview">
+        <button class="loadbutton_damage_img" style="background-image:url({{picture}});" plain='true' loading="{{isLoading}}" bindtap="upload"></button>
+      </view>
+    </block>
+  </view>
+  <!-- 查看结果按钮 -->
+<view class="loadview" bindtap='tapToMain'>
+    <button class="loadbutton" hover-class="loadbuttona" bindtap="tapToRes">危险行为检测</button>
+</view>
+</view>

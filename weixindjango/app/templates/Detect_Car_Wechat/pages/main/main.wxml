@@ -1,0 +1,22 @@
+<!--pages/main/main.wxml-->
+<!-- 主页
+显示新闻和上传图片入口
+ -->
+<!-- 背景图片 -->
+<image class='background' src="../picture/bg.png" mode="aspectFill"></image>
+
+<!-- 
+aspectFit  ----  保持纵横比例缩放图片，使图片的长边能够完全显示出来，也就说图片可以完整的显示出来
+aspectFill  ----- 保持纵横比例缩放图片，只保证图片的短边能够完全显示出来，也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取 
+-->
+<view class="container">
+<!-- 相机
+上传图片页面入口 -->
+<text class="title">AI 智能出险</text>
+  <image class="introduction_img" src="../picture/introduction.png" mode="widthFix"></image>
+  <view class="loadview">
+    <button class="loadbutton" hover-class="loadbuttona" plain='true'  bindtap="jumppage"></button>
+</view>
+
+  <!-- <image src="https://lamaric.goho.co/media/icon/camera.png" mode="aspectFit" class="xjs" bindtap="jumppage"></image> -->
+</view>

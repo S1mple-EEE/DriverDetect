@@ -1,0 +1,34 @@
+<cover-view class='tab-bar'>
+    <!-- 背景一条线 -->
+    <cover-view class='tab-bar-bg-view'/>
+    <!-- 背景图片 -->
+    <cover-image class='tab-bar-bg' src='/pages/picture/tab_bar_bg.png'/>
+    
+    <!-- 发现 -->
+    <cover-view class='tab-bar-index' data-index='0' data-path='{{list[0].pagePath}}' bindtap='tab_bar_index'>
+      <cover-view class='tab-bar-icon'>
+        <cover-image src='{{selected == 0 ? list[0].selectedIconPath : list[0].iconPath}}' class='tab-bar-img'/>
+        <cover-view class='tab-bar-tmp'/>
+        <!-- <cover-view class='tab-bar-text' style='color:{{selected == 0 ? selectedColor : color}}'>发现</cover-view> -->
+      </cover-view>
+    </cover-view>
+
+    <!-- 发布 -->
+    <cover-view class='tab-bar-index-add' data-index='2' data-path='{{list[2].pagePath}}' bindtap='tab_bar_add'>
+      <cover-view class='tab-bar-icon_add'>
+        <cover-view style='width:100%;height:3px;'/>
+        <cover-image class='tab-bar-img-add' mode="aspectFit" src='{{addImgPath}}'/>
+      </cover-view>
+    </cover-view>
+
+    <!-- 通知 -->
+    <cover-view class='tab-bar-index' data-index='1' data-path='{{list[1].pagePath}}' bindtap='tab_bar_index'>
+      <cover-view class='tab-bar-icon'>
+        <cover-image src='{{selected == 1 ? list[1].selectedIconPath : list[1].iconPath}}' class='tab-bar-img' />
+        <cover-view class='tab-bar-tmp'/>
+        <!-- <cover-view class='tab-bar-text' style='color:{{selected == 1 ? selectedColor : color}}'>通知</cover-view> -->
+      </cover-view>
+    </cover-view>
+
+
+</cover-view>

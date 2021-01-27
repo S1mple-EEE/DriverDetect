@@ -1,0 +1,63 @@
+/* pages/main/main.wxss */
+.container{
+  padding-top: 60rpx;
+  justify-content:flex-start;
+}
+.title{
+  padding-bottom: 40rpx;
+  margin-bottom: 40rpx;
+  height: 48rxp;
+  color: rgb(245, 248, 249);
+  font-family:"SimHei";
+}
+.news-k {
+  height: 400rpx;
+  width: 680rpx;
+  margin-left: 35rpx;
+  margin-right: 35rpx;
+  margin-top: 26rpx
+}
+.news1 {
+  width: 100%;
+  /* margin-top: 80rpx; */
+}
+.news2 {
+  width: 100%;
+}
+.xjs {
+  height: 180rpx;
+  width: 180rpx;
+  /* height: 90dp;
+  width: 90dp; */
+}
+.introduction{
+  width: 90%;
+  margin: 0 auto;
+}
+.introduction_img{
+  width: 90%;
+  margin: 0 auto;
+}
+.loadbuttona {
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+  /* background: rgb(202, 202, 201); */
+  /* background-image: url(https://lamaric.goho.co/media/icon/next_step_white.png); */
+  background-image: url(https://s2.ax1x.com/2019/08/11/ej9wWR.png);
+  background-size: 350rpx 100rpx;
+  background-repeat:no-repeat;
+}
+
+.loadbutton {
+  padding-top: 30rpx;
+  margin-top: 30rpx;
+  width: 350rpx;
+  height: 100rpx;
+  /* background-image: url(https://lamaric.goho.co/media/icon/next_step_white.png); */
+  background-image: url(https://s2.ax1x.com/2019/08/11/ej9wWR.png);
+  background-size: 350rpx 100rpx;
+  background-repeat:no-repeat;
+}
+.loadview{
+  margin-bottom: 50rpx;
+}

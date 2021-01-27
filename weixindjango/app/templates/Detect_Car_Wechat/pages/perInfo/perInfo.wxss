@@ -1,0 +1,69 @@
+/* pages/perInfo/perInfo.wxss */
+
+
+.container{
+padding: 15rpx 60rpx 60rpx 60rpx;
+padding-top: 15rpx;
+
+}
+.perk {
+/* column-count: 3; */
+width: 85%;
+margin-top: 54rpx;
+/* height: 100rpx; */
+/* margin-right: 300rpx; */
+/* float: left; */
+}
+
+.tx {
+margin-right: 20rpx;
+float: left;
+width: 100rpx;
+height: 100rpx;
+border-radius: 50%;
+overflow: hidden;
+/* display: inline-block; */
+/* float: left; */
+/* border: 1rpx solid red; */
+}
+.perinf {
+
+/* margin-top: 150rpx; */
+/* margin-left: 40rpx; */
+padding-top: 10rpx;
+padding-right: 240rpx;
+float: right;
+color: #ffffff;
+font: 40rpx;
+overflow: hidden;
+/* border: 1rpx solid greenyellow; */
+
+}
+.xxk {
+width: 100%;
+margin-top: 30rpx;
+display:flex; 
+/* align-items: center; */
+justify-content: center; 
+}
+.xx {
+/* margin-left: 45rpx; */
+height: 120rpx;
+width: 90%;
+}
+
+
+.title {
+/* margin-left: 40rpx; */
+margin-top: 44rpx;
+width: 150rpx;
+height: 48rpx;
+}
+.txbox{
+  float: left;
+  /* padding-right: 100rpx; */
+}
+.textbox{
+  float: right;
+  padding-right: 50rpx;
+}
