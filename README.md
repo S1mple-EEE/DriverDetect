@@ -9,3 +9,6 @@ shape_predictor_81_face_landmarks.dat
 两段测试视频为：   
 1-FemaleNoGlasses.mp4  
 4-FemaleNoGlasses.mp4  
+
+django服务器地址：  
+http://127.0.0.1:8000/  
