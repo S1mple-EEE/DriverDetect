@@ -1,17 +1,108 @@
 // pages/result/result.js
 // 初始化实例
-var app=getApp();
+import * as echarts from "../../ec-canvas/echarts";
+
+var app = getApp();
+
+function initChart(canvas, width, height) {
+    const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height
+    });
+    canvas.setChart(chart);
+
+    var option = {
+        color: ["#37A2DA", "#67E0E3", "#9FE6B8"],
+        legend: {
+            data: ["A", "B", "C"],
+            top: 20,
+            left: "center",
+            textStyle: {//图例文字的样式
+                color: '#ffffff',
+            },
+            z: 100
+
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            axisLabel: {
+                textStyle: {
+                    color: '#ffffff',  //坐标的字体颜色
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#ffffff',  //坐标轴的颜色
+                },
+            },
+
+        },
+        yAxis: {
+            x: 'center',
+            type: 'value',
+            splitLine: {
+                lineStyle: {
+                    type: 'solid'
+                }
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#ffffff',  //坐标的字体颜色
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#ffffff',  //坐标轴的颜色
+                },
+            },
+        },
+        series: [{
+            name: 'A',
+            type: 'line',
+            smooth: true,
+            data: [18, 36, 65, 30, 78, 40, 33]
+        },
+            {
+                name: 'B',
+                type: 'line',
+                smooth: true,
+                data: [12, 50, 51, 35, 70, 30, 20]
+            },
+            {
+                name: 'C',
+                type: 'line',
+                smooth: true,
+                data: [10, 30, 31, 50, 40, 20, 10]
+            }
+        ]
+    };
+    chart.setOption(option);
+    return chart;
+}
 
 Page({
-  data: {
-    jsondata:{},
-    ResVideoPath:"",
-    resimg: "",             //结果图片地址
-    result: "",             //结果文本地址
-    haveres:"",             //布尔判断
-    atten:"检测结果查看",
-    total: 0,
-  },
+    data: {
+        jsondata: {},
+        ResVideoPath: "",
+        resimg: "",             //结果图片地址
+        result: "",             //结果文本地址
+        haveres: "",             //布尔判断
+        atten: "检测结果查看",
+        total: 0,
+        category: "",
+        interttime: "",
+        ec: {
+            onInit: initChart
+        }
+    },
   // 页面载入函数
   // 捕获globalData中的结果信息
   // 初次进入拍照时，如无上传，则请求返回上传
@@ -20,7 +111,9 @@ Page({
     var jsondata= JSON.parse(JSON.parse(decodeURIComponent(options.jsondata)));
     that.data.jsondata=jsondata;
     that.setData({
-      ResVideoPath:jsondata['videopath']
+        ResVideoPath: jsondata['videopath'],
+        category: jsondata['category'],
+        createtime: jsondata['inserttime'],
     })
     
     that.data.resimg = app.globalData.resultimg;
@@ -42,31 +135,6 @@ Page({
     wx:wx.switchTab({
       url: '../main/main',
     })
-  },
-  //预览图片
-  previewImg:function(event){
-    var that = this;
-    var src = that.data.resimg;
-    wx.previewImage({
-      current: src,
-      urls: [src],
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
-    },
-  //获取选中的checkbox的value  value=price
-  checkboxChange: function (e) {
-    var that = this;
-    var selected = 0;
-    // console.log('checkbox发生change事件，携带value值为：', e.detail.value)
-    for (var j = 0, len = e.detail.value.length; j < len; j++) {
-      // console.log(parseInt(e.detail.value[j]));
-      selected += parseInt(e.detail.value[j]);
-    }
-    // console.log(selected);
-    that.setData({total: selected})
-
   },
   // 跳转函数
   // 跳转到上传图片界面
