@@ -11,44 +11,13 @@
   <view class="imgresk">
     <video src="{{ResVideoPath}}" class="imgres" ></video>
   </view>
-  <!-- 显示结果文本
-根据布尔值改变显示（首次进入要求上传图片） -->
-  <view class="textres">
-    <text wx:if="{{!haveres}}" class="textf">{{atten}}</text>
-    <block wx:else>
-      <!-- 显示损伤信息——表格形式 -->
-      <view class="total">
-      <text >定损结果（元）：\n</text>
-      <text id="selected">{{total}}</text>
-      </view>
-      <view class="table">
-        <view class="trc">
-          <view class="th"> </view>
-          <view class="th">损伤部位</view>
-          <view class="th">损伤类型</view>
-          <view class="th ">维修价格</view>
-        </view>
-        <checkbox-group class="check" bindchange="checkboxChange">
-        <block wx:for="{{result}}" wx:key="{{code}}">
-          <view class="tra" wx:if="{{index % 2 == 0}}">
-            <view class="td"><checkbox value="{{item.price}}"></checkbox></view>
-            <view class="td">{{item.part}}</view>
-            <view class="td">{{item.type}}</view>
-            <view class="td">{{item.price}}</view>
-          </view>
-          <view class="trb" wx:else>
-            <view class="td"><checkbox value="{{item.price}}"></checkbox></view>
-            <view class="td">{{item.part}}</view>
-            <view class="td">{{item.type}}</view>
-            <view class="td">{{item.price}}</view>
-          </view>
-        </block>
-        </checkbox-group>
+
+  <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ec}}"></ec-canvas>
         <!-- 返回主页 -->
-          <view class="loadview">
-              <button class="loadbutton" hover-class="loadbuttona" plain='true' bindtap="retToMain"></button>
-          </view>
-      </view>
-    </block>
+        
+  <view class="loadview">
+      <button class="loadbutton" hover-class="loadbuttona" plain='true' bindtap="retToMain"></button>
   </view>
+
+
 </view>

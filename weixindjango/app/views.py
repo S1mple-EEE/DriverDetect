@@ -93,27 +93,33 @@ def getVideo(request):
     if request.method == 'POST':
         if request.FILES:
             myFile = request.FILES['file']
-            dir = os.path.join(os.path.join(BASE_DIR, 'app\\eye_detect'),'uploadvideo')
+            dir = os.path.join(os.path.join(BASE_DIR, 'app\\eye_detect'), 'uploadvideo')
             destination = open(os.path.join(dir, myFile.name),
                                'wb+')
             for chunk in myFile.chunks():
                 destination.write(chunk)
             destination.close()
 
-            ALLEAR_TIME_STATUS= driver_detecting_video(myFile.name)
-            # ALLEAR_TIME_STATUS=[[1,2,3],[1,2,3],[1,2,3]]
+            # ALLEAR_TIME_STATUS= driver_detecting_video(myFile.name)
+            ALLEAR_TIME_STATUS = [[1, 2, 3], [1, 2, 3], [1, 2, 3]]
+
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-            result = {"ear":ALLEAR_TIME_STATUS[0],"time":ALLEAR_TIME_STATUS[1],"status": ALLEAR_TIME_STATUS[2],"createtime":createtime}
-            EyeInsertDB(ALLEAR_TIME_STATUS,createtime)
+            result = {"ear": ALLEAR_TIME_STATUS[0], "time": ALLEAR_TIME_STATUS[1], "status": ALLEAR_TIME_STATUS[2],
+                      "createtime": createtime}
+            EyeInsertDB(ALLEAR_TIME_STATUS, createtime)
 
             jsondate = time.strftime("%a_%b_%d_%H.%M.%S_%Y", time.localtime())
-            jsonfilename = "./app/static/json/eyedetect_"+jsondate+".json"
+            jsonfilename = "./app/static/json/eyedetect_" + jsondate + ".json"
             with open(jsonfilename, 'w') as file_obj:
                 json.dump(result, file_obj)
 
-            ResponseResult = {"inserttime": createtime,"videopath":videopath,"category":"eye_detect"}
-            return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False), content_type="application/json,charset=utf-8")
+            ResponseResult = {"ear": ALLEAR_TIME_STATUS[0], "time": ALLEAR_TIME_STATUS[1],
+                              "status": ALLEAR_TIME_STATUS[2], "createtime": createtime, "videopath": videopath,
+                              "category": "eye_detect"}
+            # ResponseResult = {"inserttime": createtime,"videopath":videopath,"category":"eye_detect"}
+            return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
+                                content_type="application/json,charset=utf-8")
         else:
             return HttpResponse('上传数据为空')
     else:
