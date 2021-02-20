@@ -1,12 +1,12 @@
 {
   "pages": [
-    
     "pages/main/main",
     "pages/index/index",
     "pages/logs/logs",
     "pages/perInfo/perInfo",
     "pages/lipei/lipei",
     "pages/sc/sc",
+    "pages/echartdemo/echartdemo",
     "pages/result/result"
   ],
   "window": {

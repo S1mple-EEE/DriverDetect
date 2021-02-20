@@ -100,24 +100,17 @@ def getVideo(request):
                 destination.write(chunk)
             destination.close()
 
-            # ALLEAR_TIME_STATUS= driver_detecting_video(myFile.name)
-            ALLEAR_TIME_STATUS = [[1, 2, 3], [1, 2, 3], [1, 2, 3]]
+            ALLEAR_TIME_STATUS = driver_detecting_video(myFile.name)
+            # ALLEAR_TIME_STATUS = [[1, 2, 2], [1, 2, 3], [1, 2, 2]]
 
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-            result = {"ear": ALLEAR_TIME_STATUS[0], "time": ALLEAR_TIME_STATUS[1], "status": ALLEAR_TIME_STATUS[2],
-                      "createtime": createtime}
             EyeInsertDB(ALLEAR_TIME_STATUS, createtime)
-
-            jsondate = time.strftime("%a_%b_%d_%H.%M.%S_%Y", time.localtime())
-            jsonfilename = "./app/static/json/eyedetect_" + jsondate + ".json"
-            with open(jsonfilename, 'w') as file_obj:
-                json.dump(result, file_obj)
 
             ResponseResult = {"ear": ALLEAR_TIME_STATUS[0], "time": ALLEAR_TIME_STATUS[1],
                               "status": ALLEAR_TIME_STATUS[2], "createtime": createtime, "videopath": videopath,
                               "category": "eye_detect"}
-            # ResponseResult = {"inserttime": createtime,"videopath":videopath,"category":"eye_detect"}
+
             return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
                                 content_type="application/json,charset=utf-8")
         else:
