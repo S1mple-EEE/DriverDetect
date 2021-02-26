@@ -8,8 +8,9 @@
 <view class="maincontainer">
   <!-- 四角照的view块 -->
   <view >
-    <view >
-      <image class="bar" src="../picture/news1.png" mode='aspectFill'></image>
+    <view style="position:relative;">
+      <image class="bar" src="../picture/galaxy.jpg" mode='aspectFill'></image>
+      <view style="position:absolute; z-index:2; top:8rpx; left:230rpx; color:#ffffff">局部模块检测</view>
     </view>
     <view class="dak">
       <!-- 第一张四角照,布尔判定显示图片 -->
@@ -79,8 +80,9 @@
     <button class='detectbtnr' bindtap="eyedetect"> 视线检测 </button>
   </view>
 </view>
-  <view style="margin-top: 40rpx">
-      <image class="bar" src="../picture/news1.png" mode='aspectFill'></image>
+  <view style="margin-top: 40rpx;position:relative;">
+    <image class="bar" src="../picture/galaxy.jpg" mode='aspectFill'></image>
+      <view style="position:absolute; z-index:2; top:8rpx; left:230rpx; color:#ffffff">整体模块检测</view>
   </view>
   <!-- 损伤照,上传图片 -->
   <view class="showImage">
