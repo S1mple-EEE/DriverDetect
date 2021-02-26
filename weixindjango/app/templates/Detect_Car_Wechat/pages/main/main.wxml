@@ -12,7 +12,7 @@ aspectFill  ----- 保持纵横比例缩放图片，只保证图片的短边能�
 <view class="container">
 <!-- 相机
 上传图片页面入口 -->
-<text class="title">AI 智能出险</text>
+<text class="title">危险驾驶行为检测</text>
   <image class="introduction_img" src="../picture/introduction.png" mode="widthFix"></image>
   <view class="loadview">
     <button class="loadbutton" hover-class="loadbuttona" plain='true'  bindtap="jumppage"></button>
