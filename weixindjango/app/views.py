@@ -1,4 +1,4 @@
-from app.models import User,EyeDetect
+from app.models import User,EyeDetect,FacePose
 from django.http import HttpResponse
 import base64
 import numpy as np
@@ -90,6 +90,13 @@ def cleartempimg(request):
                     os.remove(path_file2)
     return HttpResponse("文件夹已清空")
 
+#将EAR写入数据库
+def EyeInsertDB(ALLEAR_TIME_STATUS,tabdate):
+    eyedetect_list = []
+    for i in range(len(ALLEAR_TIME_STATUS[0])):
+        eyedetect_list.append(EyeDetect(userTime=ALLEAR_TIME_STATUS[0][i],userEar=ALLEAR_TIME_STATUS[1][i],userStatus=ALLEAR_TIME_STATUS[2][i], userCreateTime=tabdate))
+    EyeDetect.objects.bulk_create(eyedetect_list)
+
 def getVideo(request):
     if request.method == 'POST':
         if request.FILES:
@@ -121,6 +128,13 @@ def getVideo(request):
         return HttpResponse('请求错误')
 
 
+# 将Face数据写入数据库
+def facePoseInsertDB(PITCH_TIME_STATUS,tabdate):
+    facedetect_list=[]
+    for i in range(len(PITCH_TIME_STATUS[0])):
+        facedetect_list.append(FacePose(userTime=PITCH_TIME_STATUS[1][i],userPitch=PITCH_TIME_STATUS[0][i],userStatus=PITCH_TIME_STATUS[2][i], userCreateTime=tabdate))
+    FacePose.objects.bulk_create(facedetect_list)
+
 # 得到面部方向检测的视频
 def getFaceVideo(request):
     if request.method == 'POST':
@@ -135,10 +149,13 @@ def getFaceVideo(request):
             destination.close()
 
             # 读取用户上传的video，并进行头部姿态检测，并将检测的结果保存到static/video/文件夹下
-            driverFacePoseVideo(myFile.name)
+            PITCH_TIME_STATUS=driverFacePoseVideo(myFile.name)
 
             # 获取保存的头部姿态检测视频文件地址
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+
+            createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+            facePoseInsertDB(PITCH_TIME_STATUS, createtime)
 
             # 创建时间
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
@@ -153,8 +170,6 @@ def getFaceVideo(request):
         return HttpResponse('请求错误')
 
 
-def EyeInsertDB(ALLEAR_TIME_STATUS,tabdate):
-    eyedetect_list = []
-    for i in range(len(ALLEAR_TIME_STATUS[0])):
-        eyedetect_list.append(EyeDetect(userTime=ALLEAR_TIME_STATUS[0][i],userEar=ALLEAR_TIME_STATUS[1][i],userStatus=ALLEAR_TIME_STATUS[2][i], userCreateTime=tabdate))
-    EyeDetect.objects.bulk_create(eyedetect_list)
+
+
+

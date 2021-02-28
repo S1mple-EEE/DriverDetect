@@ -104,7 +104,6 @@ function setOption(chart, linedata, point1data, point2data) {
     chart.setOption(option)
 }
 
-
 Page({
     data: {
         tabs: ["闭眼检测", "头部姿态检测", "不规范行为检测", "视线检测"],

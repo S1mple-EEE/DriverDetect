@@ -163,11 +163,16 @@ def get_pose_estimation_in_euler_angle(landmark_shape, im_szie):
         print('get_pose_estimation_in_euler_angle exception:{}'.format(e))
         return -1, None, None, None
 
+# 检测视频并返回对象的头偏转角度
 def driverFacePoseVideo(VideoName):
     path='./app/face_detect/uploadvideo/' + VideoName # 视频的路径
     cap = cv2.VideoCapture(path)
     start_time = time.time()
 
+    PITCH=[]
+    TIME=[]
+    STATUS=[]
+    numframe=0
     # 视频的宽度
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     # 视频的高度
@@ -187,7 +192,8 @@ def driverFacePoseVideo(VideoName):
             print('read frame failed')
             break
         size = im.shape
-
+       
+        numframe = numframe + 1
         # 避免相片太大，进行缩小操作
         if size[0] > 700:
             h = size[0] / 3
@@ -210,6 +216,15 @@ def driverFacePoseVideo(VideoName):
         ret, pitch, yaw, roll = get_euler_angle(rotation_vector)
         euler_angle_str = 'pitch,Y:{}, yaw,X:{}, roll,Z:{}'.format(pitch, yaw, roll)
         print(euler_angle_str)
+
+        # 将数据写入列表中,分别是以Y轴的转动角度，检测时间以及是否危险的状态
+        PITCH.append(pitch)
+        TIME.append(numframe / cv2.CAP_PROP_FPS)
+        if abs(pitch-180)>5:
+            status=1
+        else:
+            status=0
+        STATUS.append(status)
 
         #将三维点投影到二维平面上
         #我们以鼻子尖为坐标原点
@@ -244,6 +259,8 @@ def driverFacePoseVideo(VideoName):
         cv2.waitKey(1)
     
     cap.release()
+    PITCH_TIME_STATUS=[PITCH,TIME,STATUS]
+    return PITCH_TIME_STATUS
 
 if __name__ == '__main__':
     video_name="1-FemaleNoGlasses.mp4"

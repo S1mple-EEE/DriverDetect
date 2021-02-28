@@ -142,6 +142,7 @@ Page({
             isLoading1: true
           })
         }
+        console.log(that.data.img_url1)
       },
       fail: function() {
         // fail
@@ -220,8 +221,6 @@ Page({
     })
   },
 
-
-
 // 选择图片显示函数（不上传，用于四角照）
   upload2: function (e) {
     console.log("chooseVideo")
@@ -236,7 +235,7 @@ Page({
          compressed: true,//是否压缩所选择的视频文件
          success: function(res){
            console.log(res)
-           let tempFilePath = res.tempFilePath//选择定视频的临时文件路径（本地路径）
+           let tempFilePath2 = res.tempFilePath//选择定视频的临时文件路径（本地路径）
            let duration = res.duration //选定视频的时间长度
            let size = parseFloat(res.size/1024/1024).toFixed(1) //选定视频的数据量大小
            // let height = res.height //返回选定视频的高度
@@ -255,7 +254,7 @@ Page({
              })
            }else{
              that.setData({
-               img_url2: tempFilePath,
+               img_url2: tempFilePath2,
                isLoading2: true
              })
            }
