@@ -47,7 +47,7 @@
       </view>
 
       <button class='detectbtnl' bindtap="eyedetect"> 闭眼检测 </button>
-      <button class='detectbtnr' bindtap="eyedetect"> 头部姿态检测 </button>
+      <button class='detectbtnr' bindtap="facePose"> 头部姿态检测 </button>
     </view>
 
 

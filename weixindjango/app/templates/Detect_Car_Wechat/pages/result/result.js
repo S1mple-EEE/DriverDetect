@@ -130,35 +130,37 @@ Page({
             category: jsondata['category'],
             createtime: jsondata['inserttime'],
         })
+        console.log("视频的地址为：")
+        console.log(that.data.ResVideoPath)
     },
-    onReady: function (options) {
-        var that = this;
-        that.oneComponent = that.selectComponent('#mychart-dom-line');
-        var linedata = [];
-        var point1data = [];
-        var point2data = [];
-        for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
-            linedata.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-            if (that.data.jsondata['status'][i] == 1) {
-                point1data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-            } else if (that.data.jsondata['status'][i] == 2) {
-                point2data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-            }
-        }
-        this.init_one(linedata, point1data, point2data);
-    },
+    // onReady: function (options) {
+    //     var that = this;
+    //     that.oneComponent = that.selectComponent('#mychart-dom-line');
+    //     var linedata = [];
+    //     var point1data = [];
+    //     var point2data = [];
+    //     for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
+    //         linedata.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+    //         if (that.data.jsondata['status'][i] == 1) {
+    //             point1data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+    //         } else if (that.data.jsondata['status'][i] == 2) {
+    //             point2data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+    //         }
+    //     }
+    //     this.init_one(linedata, point1data, point2data);
+    // },
 
-    init_one: function (linedata, point1data, point2data) {           //初始化第一个图表
-        this.oneComponent.init((canvas, width, height) => {
-            const chart = echarts.init(canvas, null, {
-                width: width,
-                height: height
-            });
-            setOption(chart, linedata, point1data, point2data);
-            this.chart = chart;
-            return chart;
-        });
-    },
+    // init_one: function (linedata, point1data, point2data) {           //初始化第一个图表
+    //     this.oneComponent.init((canvas, width, height) => {
+    //         const chart = echarts.init(canvas, null, {
+    //             width: width,
+    //             height: height
+    //         });
+    //         setOption(chart, linedata, point1data, point2data);
+    //         this.chart = chart;
+    //         return chart;
+    //     });
+    // },
 
     //返回主页
     retToMain: function (e) {

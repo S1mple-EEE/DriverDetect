@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'initialtrain/',views.initialtrain,name='initailtrain'),
     url(r'driverdetect/',views.driverdetect,name='driverdetect'),
     url(r'getVideo/',views.getVideo,name='getVideo'),
+    url(r'getFaceVideo/',views.getFaceVideo,name='Face Pose Video'),
     url(r'^static/(?P<path>.*)$', static_view.serve),
     #url(r'',views.welcome),
 ]

@@ -12,6 +12,7 @@ import json
 from app.eye_detect.eye_detect_frame import eye_detect_frame
 from app.eye_detect.driver_detect_frame import driver_detecting_frame
 from app.eye_detect.driver_detect_video import driver_detecting_video
+from app.face_detect.facePose import driverFacePoseVideo
 
 
 from django.conf import settings
@@ -100,10 +101,11 @@ def getVideo(request):
                 destination.write(chunk)
             destination.close()
 
-            ALLEAR_TIME_STATUS = driver_detecting_video(myFile.name)
-            # ALLEAR_TIME_STATUS = [[1, 2, 2], [1, 2, 3], [1, 2, 2]]
+            # ALLEAR_TIME_STATUS = driver_detecting_video(myFile.name)
+            ALLEAR_TIME_STATUS = [[1, 2, 2], [1, 2, 3], [1, 2, 2]]
 
-            videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+            # videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+            videopath = "http://127.0.0.1:8000/app/static/video/" + "eyedetect.mp4"
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
             EyeInsertDB(ALLEAR_TIME_STATUS, createtime)
 
@@ -111,6 +113,39 @@ def getVideo(request):
                               "status": ALLEAR_TIME_STATUS[2], "createtime": createtime, "videopath": videopath,
                               "category": "eye_detect"}
 
+            return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
+                                content_type="application/json,charset=utf-8")
+        else:
+            return HttpResponse('上传数据为空')
+    else:
+        return HttpResponse('请求错误')
+
+
+# 得到面部方向检测的视频
+def getFaceVideo(request):
+    if request.method == 'POST':
+        # 将用户上传的视频文件写入到eyedetect\uploadvideo\文件夹下
+        if request.FILES:
+            myFile = request.FILES['file']
+            dir = os.path.join(os.path.join(BASE_DIR, 'app\\face_detect'), 'uploadvideo')
+            destination = open(os.path.join(dir, myFile.name),
+                               'wb+')
+            for chunk in myFile.chunks():
+                destination.write(chunk)
+            destination.close()
+
+            # 读取用户上传的video，并进行头部姿态检测，并将检测的结果保存到static/video/文件夹下
+            driverFacePoseVideo(myFile.name)
+
+            # 获取保存的头部姿态检测视频文件地址
+            # videopath=os.path.join(BASE_DIR,os.path.join('app/static/video','output.avi'))
+            videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+
+            # 创建时间
+            createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+
+            # 返回给result.js 中option的数据通信值，包括结果视频的绝对地址、创建时间、检测类别等信息
+            ResponseResult = {"createtime": createtime, "videopath": videopath, "category": "face_pose_detect"}
             return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
                                 content_type="application/json,charset=utf-8")
         else:
