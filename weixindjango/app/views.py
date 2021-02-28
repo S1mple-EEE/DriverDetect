@@ -101,11 +101,11 @@ def getVideo(request):
                 destination.write(chunk)
             destination.close()
 
-            # ALLEAR_TIME_STATUS = driver_detecting_video(myFile.name)
-            ALLEAR_TIME_STATUS = [[1, 2, 2], [1, 2, 3], [1, 2, 2]]
+            ALLEAR_TIME_STATUS = driver_detecting_video(myFile.name)
+            # ALLEAR_TIME_STATUS = [[1, 2, 2], [1, 2, 3], [1, 2, 2]]
 
-            # videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
-            videopath = "http://127.0.0.1:8000/app/static/video/" + "eyedetect.mp4"
+            videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
             EyeInsertDB(ALLEAR_TIME_STATUS, createtime)
 
@@ -138,7 +138,6 @@ def getFaceVideo(request):
             driverFacePoseVideo(myFile.name)
 
             # 获取保存的头部姿态检测视频文件地址
-            # videopath=os.path.join(BASE_DIR,os.path.join('app/static/video','output.avi'))
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
 
             # 创建时间
