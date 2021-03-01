@@ -3,12 +3,12 @@
 import * as echarts from "../../ec-canvas/echarts";
 
 var app = getApp();
-function setOption(chart, linedata, point1data, point2data) {
+function setOption(chart, linedata, point1data) {
     const option = {
         title: {
             show: true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
-            text: '闭眼检测中的ear值', //主标题文本，'\n'指定换行 
-            subtext: '该值反映闭眼水平，值越小表明人眼闭合程度越小', //副标题文本，'\n'指定换行 
+            text: '头部姿态检测中的偏移角度', //主标题文本，'\n'指定换行 
+            subtext: '反映用户头部偏离角度，越大证明越偏离', //副标题文本，'\n'指定换行 
             x: 'center', //水平
             textStyle: { //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"} 
                 fontFamily: 'Arial, Verdana, sans...',
@@ -20,7 +20,7 @@ function setOption(chart, linedata, point1data, point2data) {
         },
         color: ['#37A2DA', '#e06343', '#37a354', '#b55dba', '#b5bd48', '#8378EA', '#96BFFF'],
         legend: {
-            data: ["ear value", "blink status", "close status"],
+            data: ["pitch value", "dangerous status"],
             top: 20,
             left: "center",
             textStyle: {//图例文字的样式
@@ -73,13 +73,13 @@ function setOption(chart, linedata, point1data, point2data) {
             },
         },
         series: [{
-            name: 'ear value',
+            name: 'pitch value',
             type: 'line',
             smooth: true,
             symbol: 'none',  //取消折点圆圈
             data: linedata
         }, {
-            name: 'blink status',
+            name: 'dangerous status',
             type: 'scatter',
             itemStyle: {
                 normal: {
@@ -88,16 +88,6 @@ function setOption(chart, linedata, point1data, point2data) {
             },
             data: point1data,
             z: 100
-        }, {
-            name: 'close status',
-            type: 'scatter',
-            itemStyle: {
-                normal: {
-                    color: '#DC143C', //折线点颜色
-                },
-            },
-            data: point2data,
-            z: 200
         }
         ]
     };
@@ -137,25 +127,22 @@ Page({
         that.oneComponent = that.selectComponent('#mychart-dom-line');
         var linedata = [];
         var point1data = [];
-        var point2data = [];
         for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
-            linedata.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+            linedata.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
             if (that.data.jsondata['status'][i] == 1) {
-                point1data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-            } else if (that.data.jsondata['status'][i] == 2) {
-                point2data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-            }
+                point1data.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
+            } 
         }
-        this.init_one(linedata, point1data, point2data);//调用init_one函数，给图表加上数据
+        this.init_one(linedata, point1data);
     },
 
-    init_one: function (linedata, point1data, point2data) {           //初始化第一个图表
+    init_one: function (linedata, point1data) {           //初始化第一个图表
         this.oneComponent.init((canvas, width, height) => {
-            const chart = echarts.init(canvas, null, {//不需要管，直接初始化echart元素
+            const chart = echarts.init(canvas, null, {
                 width: width,
                 height: height
-            });// 初始化echart图表
-            setOption(chart, linedata, point1data, point2data);//设置echart图表的数据以及样式
+            });
+            setOption(chart, linedata, point1data);
             this.chart = chart;
             return chart;
         });

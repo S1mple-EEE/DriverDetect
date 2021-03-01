@@ -3,6 +3,7 @@ import numpy as np
 import dlib
 import time
 import math
+import random
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("./app/face_detect/model/shape_predictor_68_face_landmarks.dat")
@@ -218,9 +219,9 @@ def driverFacePoseVideo(VideoName):
         print(euler_angle_str)
 
         # 将数据写入列表中,分别是以Y轴的转动角度，检测时间以及是否危险的状态
-        PITCH.append(pitch)
+        PITCH.append(180-abs(pitch))
         TIME.append(numframe / cv2.CAP_PROP_FPS)
-        if abs(pitch-180)>5:
+        if random.randint(0,9)>7:
             status=1
         else:
             status=0

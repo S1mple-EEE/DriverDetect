@@ -288,7 +288,7 @@ facePose:function(e){
         let jsondata=JSON.parse(res.data)//得到getFaceVideo返回的HttpResponse值
         //跳转到reuslt界面并携带参数，参数值为getFacVideo()函数的返回值，其中videopath="./app/static/video/video_name.mp4"
         wx.navigateTo({
-          url: '../result/result?jsondata='+encodeURIComponent(JSON.stringify(res.data)),
+          url: '../result2/result2?jsondata='+encodeURIComponent(JSON.stringify(res.data)),
         })
 
         wx.showToast({

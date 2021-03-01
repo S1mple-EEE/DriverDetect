@@ -161,15 +161,11 @@ def getFaceVideo(request):
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
 
             # 返回给result.js 中option的数据通信值，包括结果视频的绝对地址、创建时间、检测类别等信息
-            ResponseResult = {"createtime": createtime, "videopath": videopath, "category": "face_pose_detect"}
+            ResponseResult = {"createtime": createtime, "videopath": videopath, "category": "face_pose_detect",
+            "pitch":PITCH_TIME_STATUS[0],"status":PITCH_TIME_STATUS[2],"time":PITCH_TIME_STATUS[1]}
             return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
                                 content_type="application/json,charset=utf-8")
         else:
             return HttpResponse('上传数据为空')
     else:
         return HttpResponse('请求错误')
-
-
-
-
-
