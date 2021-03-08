@@ -11,17 +11,14 @@ function setOption(chart, linedata, point1data, point2data) {
             subtext: '该值反映闭眼水平，值越小表明人眼闭合程度越小', //副标题文本，'\n'指定换行 
             x: 'center', //水平
             textStyle: { //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"} 
-                fontFamily: 'Arial, Verdana, sans...',
-                fontSize: 20,
-                fontStyle: 'normal',
-                fontWeight: 'normal',
+                fontSize: 16,
                 color: '#ffffff',
             },
         },
         color: ['#37A2DA', '#e06343', '#37a354', '#b55dba', '#b5bd48', '#8378EA', '#96BFFF'],
         legend: {
             data: ["ear value", "blink status", "close status"],
-            top: 20,
+            top: 45,
             left: "center",
             textStyle: {//图例文字的样式
                 color: '#ffffff',
@@ -32,6 +29,7 @@ function setOption(chart, linedata, point1data, point2data) {
             left: '3%',
             right: '5%',
             bottom: '5%',
+            top: '30%',
             containLabel: true
         },
         xAxis: {
@@ -56,6 +54,7 @@ function setOption(chart, linedata, point1data, point2data) {
             x: 'center',
             type: 'value',
             name: 'ear',
+            boundaryGap: false,
             splitLine: {
                 lineStyle: {
                     type: 'solid'
@@ -115,7 +114,8 @@ Page({
         interttime: "",
         ec: {
             lazyLoad: true
-        }
+        },
+        tabledata: "",
     },
   // 页面载入函数
   // 捕获globalData中的结果信息
@@ -137,14 +137,35 @@ Page({
         var linedata = [];
         var point1data = [];
         var point2data = [];
+        var tabledata = [];
+        var index = 0;
         for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
             linedata.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
             if (that.data.jsondata['status'][i] == 1) {
+                index++;
                 point1data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+                tabledata.push({
+                    "index": index,
+                    "time": that.data.jsondata['time'][i],
+                    "ear": that.data.jsondata['ear'][i].toFixed(4),
+                    "status": "眨眼"
+                });
             } else if (that.data.jsondata['status'][i] == 2) {
+                index++;
                 point2data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+                tabledata.push({
+                    "index": index,
+                    "time": that.data.jsondata['time'][i],
+                    "ear": that.data.jsondata['ear'][i].toFixed(4),
+                    "status": "闭眼"
+                });
             }
         }
+        that.setData({
+            tabledata: tabledata
+        });
+        console.log(that.data.tabledata)
+
         this.init_one(linedata, point1data, point2data);
     },
 
