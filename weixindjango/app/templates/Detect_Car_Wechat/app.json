@@ -7,7 +7,8 @@
     "pages/lipei/lipei",
     "pages/sc/sc",
     "pages/echartdemo/echartdemo",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/result2/result2"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,7 +44,7 @@
   "networkTimeout": {
     "request": 10000000,
     "downloadFile": 10000000,
-    "connectSocket":10000000,
-    "uploadFile":10000000
+    "connectSocket": 10000000,
+    "uploadFile": 10000000
   }
 }

@@ -38,3 +38,13 @@ class EyeDetect(models.Model):
     userStatus= models.IntegerField(max_length=20)
     # 创建时间
     userCreateTime = models.CharField(max_length=40)
+
+class FacePose(models.Model):
+    # 具体视频时间
+    userTime = models.CharField(max_length=40, unique=False)
+    # pitch
+    userPitch = models.FloatField(max_length=40)
+    # 状态
+    userStatus= models.IntegerField(max_length=20)
+    # 创建时间
+    userCreateTime = models.CharField(max_length=40)
