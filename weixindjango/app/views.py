@@ -91,15 +91,18 @@ def cleartempimg(request):
     return HttpResponse("文件夹已清空")
 
 #将EAR写入数据库
-def EyeInsertDB(ALLEAR_TIME_STATUS,tabdate):
+def EyeInsertDB(ALLEAR_TIME_STATUS, tabdate, nickName, DetectClass):
     eyedetect_list = []
     for i in range(len(ALLEAR_TIME_STATUS[0])):
-        eyedetect_list.append(EyeDetect(userTime=ALLEAR_TIME_STATUS[0][i],userEar=ALLEAR_TIME_STATUS[1][i],userStatus=ALLEAR_TIME_STATUS[2][i], userCreateTime=tabdate))
+        eyedetect_list.append(EyeDetect(userTime=ALLEAR_TIME_STATUS[0][i], userEar=ALLEAR_TIME_STATUS[1][i],
+                                        userStatus=ALLEAR_TIME_STATUS[2][i], userCreateTime=tabdate,
+                                        userNickName=nickName, userDetectClass=DetectClass))
     EyeDetect.objects.bulk_create(eyedetect_list)
 
 def getVideo(request):
     if request.method == 'POST':
         if request.FILES:
+            nickName = request.POST['nickName']
             myFile = request.FILES['file']
             dir = os.path.join(os.path.join(BASE_DIR, 'app\\eye_detect'), 'uploadvideo')
             destination = open(os.path.join(dir, myFile.name),
@@ -114,7 +117,7 @@ def getVideo(request):
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
 
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-            EyeInsertDB(ALLEAR_TIME_STATUS, createtime)
+            EyeInsertDB(ALLEAR_TIME_STATUS, createtime, nickName, 'eyedetect')
 
             ResponseResult = {"ear": ALLEAR_TIME_STATUS[0], "time": ALLEAR_TIME_STATUS[1],
                               "status": ALLEAR_TIME_STATUS[2], "createtime": createtime, "videopath": videopath,
