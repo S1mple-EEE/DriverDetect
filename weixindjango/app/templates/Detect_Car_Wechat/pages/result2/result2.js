@@ -4,22 +4,25 @@ import * as echarts from "../../ec-canvas/echarts";
 
 var app = getApp();
 
-function setOption(chart, linedata, point1data, point2data) {
+function setOption(chart, linedata, point1data) {
     const option = {
         title: {
             show: true, //显示策略，默认值true,可选为：true（显示） | false（隐藏）
-            text: '闭眼检测中的ear值', //主标题文本，'\n'指定换行 
-            subtext: '该值反映闭眼水平，值越小表明人眼闭合程度越小', //副标题文本，'\n'指定换行 
+            text: '头部姿态检测中的偏移角度', //主标题文本，'\n'指定换行 
+            subtext: '反映用户头部偏离角度，越大证明越偏离', //副标题文本，'\n'指定换行 
             x: 'center', //水平
             textStyle: { //主标题文本样式{"fontSize": 18,"fontWeight": "bolder","color": "#333"} 
-                fontSize: 16,
+                fontFamily: 'Arial, Verdana, sans...',
+                fontSize: 20,
+                fontStyle: 'normal',
+                fontWeight: 'normal',
                 color: '#ffffff',
             },
         },
         color: ['#37A2DA', '#e06343', '#37a354', '#b55dba', '#b5bd48', '#8378EA', '#96BFFF'],
         legend: {
-            data: ["ear value", "blink status", "close status"],
-            top: 45,
+            data: ["pitch value", "dangerous status"],
+            top: 20,
             left: "center",
             textStyle: {//图例文字的样式
                 color: '#ffffff',
@@ -30,7 +33,6 @@ function setOption(chart, linedata, point1data, point2data) {
             left: '3%',
             right: '5%',
             bottom: '5%',
-            top: '30%',
             containLabel: true
         },
         xAxis: {
@@ -55,7 +57,6 @@ function setOption(chart, linedata, point1data, point2data) {
             x: 'center',
             type: 'value',
             name: 'ear',
-            boundaryGap: false,
             splitLine: {
                 lineStyle: {
                     type: 'solid'
@@ -73,13 +74,13 @@ function setOption(chart, linedata, point1data, point2data) {
             },
         },
         series: [{
-            name: 'ear value',
+            name: 'pitch value',
             type: 'line',
             smooth: true,
             symbol: 'none',  //取消折点圆圈
             data: linedata
         }, {
-            name: 'blink status',
+            name: 'dangerous status',
             type: 'scatter',
             itemStyle: {
                 normal: {
@@ -88,22 +89,11 @@ function setOption(chart, linedata, point1data, point2data) {
             },
             data: point1data,
             z: 100
-        }, {
-            name: 'close status',
-            type: 'scatter',
-            itemStyle: {
-                normal: {
-                    color: '#DC143C', //折线点颜色
-                },
-            },
-            data: point2data,
-            z: 200
         }
         ]
     };
     chart.setOption(option)
 }
-
 
 Page({
     data: {
@@ -115,8 +105,7 @@ Page({
         interttime: "",
         ec: {
             lazyLoad: true
-        },
-        tabledata: "",
+        }
     },
     // 页面载入函数
     // 捕获globalData中的结果信息
@@ -131,52 +120,30 @@ Page({
             category: jsondata['category'],
             createtime: jsondata['inserttime'],
         })
+        console.log("视频的地址为：")
+        console.log(that.data.ResVideoPath)
     },
     onReady: function (options) {
         var that = this;
         that.oneComponent = that.selectComponent('#mychart-dom-line');
         var linedata = [];
         var point1data = [];
-        var point2data = [];
-        var tabledata = [];
-        var index = 0;
         for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
-            linedata.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
+            linedata.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
             if (that.data.jsondata['status'][i] == 1) {
-                index++;
-                point1data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-                tabledata.push({
-                    "index": index,
-                    "time": that.data.jsondata['time'][i],
-                    "ear": that.data.jsondata['ear'][i].toFixed(4),
-                    "status": "眨眼"
-                });
-            } else if (that.data.jsondata['status'][i] == 2) {
-                index++;
-                point2data.push([that.data.jsondata['time'][i], that.data.jsondata['ear'][i]]);
-                tabledata.push({
-                    "index": index,
-                    "time": that.data.jsondata['time'][i],
-                    "ear": that.data.jsondata['ear'][i].toFixed(4),
-                    "status": "闭眼"
-                });
+                point1data.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
             }
         }
-        that.setData({
-            tabledata: tabledata
-        });
-        console.log(that.data.tabledata)
-
-        this.init_one(linedata, point1data, point2data);
+        this.init_one(linedata, point1data);
     },
 
-    init_one: function (linedata, point1data, point2data) {           //初始化第一个图表
+    init_one: function (linedata, point1data) {           //初始化第一个图表
         this.oneComponent.init((canvas, width, height) => {
             const chart = echarts.init(canvas, null, {
                 width: width,
                 height: height
             });
-            setOption(chart, linedata, point1data, point2data);
+            setOption(chart, linedata, point1data);
             this.chart = chart;
             return chart;
         });

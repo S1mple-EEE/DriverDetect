@@ -37,7 +37,7 @@
 
       <!-- 第二张四角照,布尔判定显示图片 -->
       <view class="showImage">
-        <image wx:if="{{isLoading2}}" src="{{img_url2}}" class="imgr"></image>
+        <video wx:if="{{isLoading2}}" src="{{img_url2}}" class="imgr"></video>
         <block wx:else>
           <!--<image src="{{picture}}"></image>-->
           <view class="loadview">
@@ -47,7 +47,7 @@
       </view>
 
       <button class='detectbtnl' bindtap="eyedetect"> 闭眼检测 </button>
-      <button class='detectbtnr' bindtap="eyedetect"> 头部姿态检测 </button>
+        <button class='detectbtnr' bindtap="facePose">头部姿态检测</button>
     </view>
 
 

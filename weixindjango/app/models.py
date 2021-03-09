@@ -24,8 +24,8 @@ class User(models.Model):
 
     @classmethod
     def createuser(cls, account, passwd, name, phone, address, img, rank, token):
-        u = cls(userAccount = account, userPasswd = passwd, userName = name, userPhone = phone, userAdderss = address,\
-                userImg = img, userRank = rank, userToken = token)
+        u = cls(userAccount = account, userPasswd = passwd, userName = name, userPhone = phone, userAdderss = address, \
+                userImg=img, userRank=rank, userToken=token)
         return u
 
 
@@ -35,6 +35,21 @@ class EyeDetect(models.Model):
     # ear
     userEar = models.FloatField(max_length=40)
     # 状态
-    userStatus= models.IntegerField(max_length=20)
+    userStatus = models.IntegerField()
+    # 创建时间
+    userCreateTime = models.CharField(max_length=40)
+    # 用户昵称
+    userNickName = models.CharField(max_length=40, default='unknown')
+    # 检测类型
+    userDetectClass = models.CharField(max_length=40, default='unknown')
+
+
+class FacePose(models.Model):
+    # 具体视频时间
+    userTime = models.CharField(max_length=40, unique=False)
+    # pitch
+    userPitch = models.FloatField(max_length=40)
+    # 状态
+    userStatus = models.IntegerField(max_length=20)
     # 创建时间
     userCreateTime = models.CharField(max_length=40)
