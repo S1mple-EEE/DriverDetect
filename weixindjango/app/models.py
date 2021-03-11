@@ -50,6 +50,10 @@ class FacePose(models.Model):
     # pitch
     userPitch = models.FloatField(max_length=40)
     # 状态
-    userStatus = models.IntegerField(max_length=20)
+    userStatus = models.IntegerField()
     # 创建时间
     userCreateTime = models.CharField(max_length=40)
+    # 用户昵称
+    userNickName = models.CharField(max_length=40, default='unknown')
+    # 检测类型
+    userDetectClass = models.CharField(max_length=40, default='unknown')

@@ -7,7 +7,7 @@
 
 
 <view class="container">
-<image src="https://lamaric.goho.co/media/icon/icon_my.png " class="title" mode="aspectFit"></image>
+<image src="../picture/me-n.png " class="title" mode="aspectFit"></image>
 
   <!-- 显示用户头像和昵称 -->
 
@@ -17,26 +17,26 @@
     </view>
     <view class="textbox">
     <open-data type="userNickName" class="perinf"></open-data> 
-    <text style="color:white">\nDeecamp车险</text>
+    <text style="color:white">\n危险驾驶行为检测个人主页</text>
     </view>
   
   </view>
 <!-- 显示系列信息选项 -->
 <!-- 驾驶证 -->
   <view class="xxk">
-    <image class="xx" src="https://lamaric.goho.co/media/icon/icon_driver.png"  ></image>
+    <image class="xx" src="../picture/galaxy.jpg"  ></image>
   </view>
   <!-- 行驶证 -->
   <view class="xxk">
-    <image class="xx" src="https://lamaric.goho.co/media/icon/icon_xsz.png" ></image>
+    <image class="xx" src="../picture/galaxy.jpg" ></image>
   </view>
   <!-- 我的保险 -->
   <view class="xxk">
-    <image class="xx" src="https://lamaric.goho.co/media/icon/icon_baoxian.png" ></image>
+    <image class="xx" src="../picture/galaxy.jpg" ></image>
   </view>
   <!-- 设置 -->
   <view class="xxk">
-    <image class="xx" src="https://lamaric.goho.co/media/icon/icon_setting.png" ></image>
+    <image class="xx" src="../picture/galaxy.jpg" ></image>
   </view>
   
 </view>

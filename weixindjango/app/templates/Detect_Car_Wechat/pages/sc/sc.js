@@ -1,5 +1,5 @@
 // pages/sc/sc.js
-var app=getApp();
+const app=getApp();
 Page({
 
   data: {
@@ -159,6 +159,8 @@ Page({
       title: '上传进度：0%',
       mask: true //是否显示透明蒙层，防止触摸穿透
     })
+    console.log('显示用户名')
+    console.log(app.globalData.userInfo)    
     const uploadTask = wx.uploadFile({
         url: 'http://127.0.0.1:8000/app/getVideo/',//开发者服务器地址
         filePath: that.data.img_url1,//要上传文件资源的路径（本地路径）
@@ -278,7 +280,9 @@ Page({
             filePath: that.data.img_url2,//要上传文件资源的路径（本地路径）
             name: 'file',//文件对应key,开发者在服务端可以通过这个 key 获取文件的二进制内容
             // header: {}, // 设置请求的 header
-
+            formData: {
+              'nickName': app.globalData.userInfo.nickName
+          },
             success: function (res) {
                 console.log("uploadFile", res)
                 // success

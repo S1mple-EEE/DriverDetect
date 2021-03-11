@@ -105,7 +105,8 @@ Page({
         interttime: "",
         ec: {
             lazyLoad: true
-        }
+        },
+        tabledata: "",
     },
     // 页面载入函数
     // 捕获globalData中的结果信息
@@ -128,12 +129,23 @@ Page({
         that.oneComponent = that.selectComponent('#mychart-dom-line');
         var linedata = [];
         var point1data = [];
+        var tabledata = [];
+        var index = 0;
         for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
             linedata.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
             if (that.data.jsondata['status'][i] == 1) {
                 point1data.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
+                tabledata.push({
+                    "index": index,
+                    "time": that.data.jsondata['time'][i],
+                    "ear": that.data.jsondata['pitch'][i].toFixed(4),
+                    "status": "头部转向"
+                });
             }
         }
+        that.setData({
+            tabledata: tabledata
+        });
         this.init_one(linedata, point1data);
     },
 

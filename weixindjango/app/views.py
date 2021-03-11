@@ -134,11 +134,12 @@ def getVideo(request):
 
 
 # 将Face数据写入数据库
-def facePoseInsertDB(PITCH_TIME_STATUS, tabdate):
+def facePoseInsertDB(PITCH_TIME_STATUS, tabdate, nickName, DetectClass):
     facedetect_list = []
     for i in range(len(PITCH_TIME_STATUS[0])):
         facedetect_list.append(FacePose(userTime=PITCH_TIME_STATUS[1][i], userPitch=PITCH_TIME_STATUS[0][i],
-                                        userStatus=PITCH_TIME_STATUS[2][i], userCreateTime=tabdate))
+                                        userStatus=PITCH_TIME_STATUS[2][i], userCreateTime=tabdate,
+                                        userNickName=nickName, userDetectClass=DetectClass))
     FacePose.objects.bulk_create(facedetect_list)
 
 
@@ -147,6 +148,7 @@ def getFaceVideo(request):
     if request.method == 'POST':
         # 将用户上传的视频文件写入到eyedetect\uploadvideo\文件夹下
         if request.FILES:
+            nickName = request.POST['nickName']
             myFile = request.FILES['file']
             dir = os.path.join(os.path.join(BASE_DIR, 'app\\face_detect'), 'uploadvideo')
             destination = open(os.path.join(dir, myFile.name),
@@ -162,7 +164,7 @@ def getFaceVideo(request):
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
 
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
-            facePoseInsertDB(PITCH_TIME_STATUS, createtime)
+            facePoseInsertDB(PITCH_TIME_STATUS, createtime,nickName,'facepose')
 
             # 创建时间
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
