@@ -67,7 +67,7 @@
     </view>
     <!-- 第四张四角照,布尔判定显示图片 -->
     <view class="showImage">
-      <image wx:if="{{isLoading4}}" src="{{img_url4}}" class="imgr"></image>
+      <video wx:if="{{isLoading4}}" src="{{img_url4}}" class="imgr"></video>
       <block wx:else>
         <!--<image src="{{picture}}"></image>-->
         <view class="loadview">
@@ -77,7 +77,7 @@
     </view> 
 
     <button class='detectbtnl' bindtap="eyedetect"> 不规范行为检测 </button>
-    <button class='detectbtnr' bindtap="eyedetect"> 视线检测 </button>
+    <button class='detectbtnr' bindtap="gazetracking"> 视线检测 </button>
   </view>
 </view>
   <view style="margin-top: 40rpx;position:relative;">
