@@ -1,0 +1,39 @@
+<!--pages/result/result.wxml-->
+<!-- 结果显示界面 -->
+<!-- 背景图片 -->
+
+<image class='background' src="../picture/bg.png" mode="aspectFill"></image>
+<!-- 返回按钮 -->
+<image src="../picture/return.png " class="ret" bindtap="taptosc"></image>
+
+<view class="container">
+  <!-- 显示结果图片 -->
+  <view class="imgresk">
+    <video src="{{ResVideoPath}}" class="imgres" ></video>
+  </view>
+
+  <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ec}}"></ec-canvas>
+
+  <view class='tabletitle'>gaze转向不集中情况出现的时间</view>
+  <view class="table">
+    <view class="tr bg-header">
+      <view class="th">序号</view>
+      <view class="th">时间（s）</view>
+      <view class="th">gaze</view>
+      <view class="th">状态</view>
+    </view>
+    <block wx:for="{{tabledata}}" wx:key="{{time}}">
+      <view class="tr bg-items">
+        <view class="td">{{item.index}}</view>
+        <view class="td">{{item.time}}</view>
+        <view class="td">{{item.gaze}}</view>
+        <view class="td">{{item.status}}</view>
+      </view>
+    </block>
+  </view>
+
+<!-- 返回主页 -->        
+
+  <button class="loadbutton" hover-class="loadbuttona" plain='true' bindtap="retToMain"></button>
+
+</view>

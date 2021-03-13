@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',  # 数据库名称
         'USER': 'postgres',  # 拥有者，这个一般没修改
-        'PASSWORD': '200209',  # 密码，自己设定的
+        'PASSWORD': 'LKXQsdy702',  # 密码，自己设定的
         'HOST': 'localhost',  # 默认的就没写
         'PORT': '5432',
     }

@@ -357,22 +357,121 @@ Page({
     })
   },
 // 选择图片显示函数（不上传，用于四角照）
-  upload4: function (e) {
-    console.log("upload")
-    let that = this
-    wx.chooseImage({
-      success: function (res) {
-        // console.log(res)
-        let tmpFile = res.tempFilePaths[0]
+upload4: function (e) {
+  console.log("chooseVideo")
+  this.setData({clickFlag: false})
+
+  let that = this
+  //1.拍摄视频或从手机相册中选择视频
+  wx.chooseVideo({
+    sourceType: ['album', 'camera'], // album 从相册选视频，camera 使用相机拍摄
+    // maxDuration: 60, // 拍摄视频最长拍摄时间，单位秒。最长支持60秒
+    camera: 'back',//默认拉起的是前置或者后置摄像头，默认back
+    compressed: true,//是否压缩所选择的视频文件
+    success: function(res){
+      console.log(res)
+      let tempFilePath = res.tempFilePath//选择定视频的临时文件路径（本地路径）
+      let duration = res.duration //选定视频的时间长度
+      let size = parseFloat(res.size/1024/1024).toFixed(1) //选定视频的数据量大小
+      // let height = res.height //返回选定视频的高度
+      // let width = res.width //返回选中视频的宽度
+      that.data.duration = duration
+      if(parseFloat(size) > 100){
         that.setData({
-          img_url4: tmpFile
+          clickFlag: true,
+          duration: ''
         })
+        let beyondSize = parseFloat(size) - 100
+        wx.showToast({
+          title: '上传的视频大小超限，超出'+beyondSize+'MB,请重新上传',
+          //image: '',//自定义图标的本地路径，image的优先级高于icon
+          icon:'none'
+        })
+      }else{
         that.setData({
+          img_url4: tempFilePath,
           isLoading4: true
         })
-      },
-    })
+      }
+    },
+    fail: function() {
+      // fail
+    },
+    complete: function() {
+      // complete
+    }
+  })
+},
+gazetracking:function(e){
+  let that = this
+  wx.showLoading({
+    title: '上传进度：0%',
+    mask: true //是否显示透明蒙层，防止触摸穿透
+  })
+  const uploadTask = wx.uploadFile({
+    url: 'http://127.0.0.1:8000/app/GazeTrackVideo/',//开发者服务器地址
+    filePath:that.data.img_url4,//要上传文件资源的路径（本地路径）
+    name:'file',//文件对应key,开发者在服务端可以通过这个 key 获取文件的二进制内容
+    // header: {}, // 设置请求的 header
+    formData: {
+      'nickName': app.globalData.userInfo.nickName
   },
+    success: function(res){
+      console.log("uploadFile",res)
+      // success
+      wx.hideLoading()
+      if(res.statusCode == 200){
+        let jsondata=JSON.parse(res.data)
+
+        wx.navigateTo({
+          url: '../result4/result4?jsondata='+encodeURIComponent(JSON.stringify(res.data)),
+        })
+
+        wx.showToast({
+          title: '上传成功',
+          icon: 'success'
+        })
+      }else{
+        that.setData({
+          videoUrl: '',
+          poster: '',
+          duration: '',
+          clickFlag:true
+        })
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none'
+        })
+      }
+     
+    },
+    fail: function() {
+      // fail
+      wx.hideLoading()
+      this.setData({
+        videoUrl: '',
+        poster: '',
+        duration: '',
+        clickFlag:true
+      })
+      wx.showToast({
+        title: '上传失败',
+        icon: 'none'
+      })
+    }
+  })
+  //监听上传进度变化事件
+  uploadTask.onProgressUpdate((res) =>{
+    wx.showLoading({
+      title: '上传进度：'+res.progress+'%',
+      mask: true //是否显示透明蒙层，防止触摸穿透
+    })
+    console.log("上传进度",res.progress)
+    console.log("已经上传的数据长度，单位 Bytes:",res.totalBytesSent)
+    console.log("预期需要上传的数据总长度，单位 Bytes:",res.totalBytesExpectedToSend)
+  })
+},
+
   // 页面跳转函数
   // 跳转结果界面
   tapToRes: function(e){

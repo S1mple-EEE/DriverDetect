@@ -13,7 +13,7 @@ from app.eye_detect.eye_detect_frame import eye_detect_frame
 from app.eye_detect.driver_detect_frame import driver_detecting_frame
 from app.eye_detect.driver_detect_video import driver_detecting_video
 from app.face_detect.facePose import driverFacePoseVideo
-
+from app.gaze_tracking.gaze_tracking import GazeVideo
 
 from django.conf import settings
 BASE_DIR = settings.BASE_DIR
@@ -175,6 +175,30 @@ def getFaceVideo(request):
                               "time": PITCH_TIME_STATUS[1]}
             return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
                                 content_type="application/json,charset=utf-8")
+        else:
+            return HttpResponse('上传数据为空')
+    else:
+        return HttpResponse('请求错误')
+
+def GazeTrackVideo(request):
+    if request.method == 'POST':
+        if request.FILES:
+            myFile = request.FILES['file']
+            dir = os.path.join(os.path.join(BASE_DIR, 'app\\gaze_tracking'),'uploadvideo')
+            destination = open(os.path.join(dir, myFile.name),
+                               'wb+')
+            for chunk in myFile.chunks():
+                destination.write(chunk)
+            destination.close()
+            # ALLEAR_TIME_STATUS= driver_detecting_video(myFile.name) #实际操作代码
+            GAZE_TIME_STATUS=GazeVideo(myFile.name)
+            videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
+            createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+
+            ResponseResult = {"createtime": createtime, "videopath": videopath, "category": "gaze_tracking",
+                              "gaze":GAZE_TIME_STATUS[0],"time":GAZE_TIME_STATUS[1],"status":GAZE_TIME_STATUS[2]}
+            return HttpResponse(json.dumps(ResponseResult, ensure_ascii=False),
+                                    content_type="application/json,charset=utf-8")
         else:
             return HttpResponse('上传数据为空')
     else:
