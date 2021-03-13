@@ -1,4 +1,4 @@
-from app.models import User, EyeDetect, FacePose
+from app.models import User, EyeDetect, FacePose,GazeTrack
 from django.http import HttpResponse
 import base64
 import numpy as np
@@ -184,6 +184,7 @@ def GazeTrackVideo(request):
     if request.method == 'POST':
         if request.FILES:
             myFile = request.FILES['file']
+            nickName = request.POST['nickName']
             dir = os.path.join(os.path.join(BASE_DIR, 'app\\gaze_tracking'),'uploadvideo')
             destination = open(os.path.join(dir, myFile.name),
                                'wb+')
@@ -194,6 +195,7 @@ def GazeTrackVideo(request):
             GAZE_TIME_STATUS=GazeVideo(myFile.name)
             videopath = "http://127.0.0.1:8000/app/static/video/" + myFile.name
             createtime = time.strftime("%a %b %d %H:%M:%S %Y", time.localtime())
+            GazeInsertDB(GAZE_TIME_STATUS, createtime, nickName, 'gazetracking')
 
             ResponseResult = {"createtime": createtime, "videopath": videopath, "category": "gaze_tracking",
                               "gaze":GAZE_TIME_STATUS[0],"time":GAZE_TIME_STATUS[1],"status":GAZE_TIME_STATUS[2]}
@@ -203,3 +205,11 @@ def GazeTrackVideo(request):
             return HttpResponse('上传数据为空')
     else:
         return HttpResponse('请求错误')
+
+def GazeInsertDB(GAZE_TIME_STATUS, tabdate, nickName, DetectClass):
+    gazedetect_list = []
+    for i in range(len(GAZE_TIME_STATUS[0])):
+        gazedetect_list.append(GazeTrack(userTime=GAZE_TIME_STATUS[1][i], userGaze=GAZE_TIME_STATUS[0][i],
+                                        userStatus=GAZE_TIME_STATUS[2][i], userCreateTime=tabdate,
+                                        userNickName=nickName, userDetectClass=DetectClass))
+    GazeTrack.objects.bulk_create(gazedetect_list)

@@ -57,3 +57,17 @@ class FacePose(models.Model):
     userNickName = models.CharField(max_length=40, default='unknown')
     # 检测类型
     userDetectClass = models.CharField(max_length=40, default='unknown')
+
+class GazeTrack(models.Model):
+    # 具体视频时间
+    userTime = models.CharField(max_length=40, unique=False)
+    # gaze
+    userGaze = models.FloatField(max_length=40)
+    # 状态
+    userStatus = models.IntegerField()
+    # 创建时间
+    userCreateTime = models.CharField(max_length=40)
+    # 用户昵称
+    userNickName = models.CharField(max_length=40, default='unknown')
+    # 检测类型
+    userDetectClass = models.CharField(max_length=40, default='unknown')

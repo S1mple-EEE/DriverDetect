@@ -99,7 +99,7 @@ class GazeTracking(object):
     def is_right(self):
         """Returns true if the user is looking to the right"""
         if self.pupils_located:
-            return self.horizontal_ratio() <= 0.35
+            return self.horizontal_ratio() <= 0.45
 
     def is_left(self):
         """Returns true if the user is looking to the left"""
@@ -186,7 +186,10 @@ def GazeVideo(VideoName):
         oVideoWriter.write(frame)
         print('位置:', gaze.horizontal_ratio())
         #数据存入数组中
-        GAZE.append(gaze.horizontal_ratio())
+        if gaze.horizontal_ratio()==None:
+            GAZE.append(0.5)
+        else:
+            GAZE.append(gaze.horizontal_ratio())
         TIME.append(numframe / cv2.CAP_PROP_FPS)
         if gaze.horizontal_ratio() == None:
             status=0
