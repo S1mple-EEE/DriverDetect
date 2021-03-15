@@ -134,11 +134,12 @@ Page({
         for (let i = 0, len = that.data.jsondata['time'].length; i < len; i++) {
             linedata.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
             if (that.data.jsondata['status'][i] == 1) {
+                index++;
                 point1data.push([that.data.jsondata['time'][i], that.data.jsondata['pitch'][i]]);
                 tabledata.push({
                     "index": index,
                     "time": that.data.jsondata['time'][i],
-                    "ear": that.data.jsondata['pitch'][i].toFixed(4),
+                    "pitch": that.data.jsondata['pitch'][i].toFixed(4),
                     "status": "头部转向"
                 });
             }

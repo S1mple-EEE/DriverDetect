@@ -13,8 +13,31 @@
     </view>
 
     <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ec}}"></ec-canvas>
-    <!-- 返回主页 -->
 
+    <view class='tabletitle'>头部转向以及时间</view>
+  <view class="table">
+    <view class="tr bg-header">
+      <view class="th">序号</view>
+      <view class="th">时间（s）</view>
+      <view class="th">头部转向</view>
+      <view class="th">状态</view>
+    </view>
+    <block wx:for="{{tabledata}}" wx:key="{{time}}">
+      <view class="tr bg-items" wx:if="{{index%2==0}}">
+        <view class="td">{{item.index}}</view>
+        <view class="td">{{item.time}}</view>
+        <view class="td">{{item.pitch}}</view>
+        <view class="td">{{item.status}}</view>
+      </view>
+      <view class="tr bg-items2" wx:else>
+        <view class="td">{{item.index}}</view>
+        <view class="td">{{item.time}}</view>
+        <view class="td">{{item.pitch}}</view>
+        <view class="td">{{item.status}}</view>
+      </view>
+    </block>
+  </view>
+    <!-- 返回主页 -->
     <view class="loadview">
         <button class="loadbutton" hover-class="loadbuttona" plain='true' bindtap="retToMain"></button>
     </view>
